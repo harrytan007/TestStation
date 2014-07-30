@@ -1,0 +1,72 @@
+<root>
+  <template>CaseG</template>
+  <level>1</level>
+  <resource>
+    <unit name="utils" num="1">
+      <kind>utils</kind>
+    </unit>
+    <unit name="wan" num="1">
+      <kind>flowfirm_port</kind>
+      <type>wan</type>
+      <connect>
+        <kind>ixia_port</kind> 
+        <name>ixia_port_01</name>
+      </connect>
+    </unit>
+    <unit name="lan" num="5">
+      <kind>flowfirm_port</kind>
+      <type>lan</type>
+      <connect>null</connect>
+    </unit>
+    <unit name="cli">
+      <kind>flowfirm_cli</kind>
+      <user>admin</user>
+    </unit>
+    <unit name="ixia">
+      <kind>ixia_port</kind>
+      <name>ixia_port_01</name>
+    </unit>
+  </resource>
+  <data>
+    <item name="rollback">
+      <type>BOOL</type>
+      <value>True</value>
+    </item>
+    <item name="dir">
+      <type>STRING</type>
+      <value>match/type/mask/ipv4Mask</value>
+    </item>
+    <item name="file">
+      <type>STRING</type>
+      <value>streams</value>
+    </item>
+    <item name="rate">
+      <type>FLOAT</type>
+      <value>1</value> 
+    </item>
+    <item name="exphits">
+      <type>LIST</type>
+      <value>255, 127, 32768, 32768, 16385</value>
+    </item>
+    <item name="rule1str">
+      <type>STRING</type>
+      <value>1.1.0.0 255.255.255.0 0.0.0.0 0.0.0.0 0 0 0 0 0 0 1 0</value>
+    </item>
+    <item name="rule2str">
+      <type>STRING</type>
+      <value>1.1.128.0 255.255.128.0 0.0.0.0 0.0.0.0 0 0 0 0 0 0 2 0</value>
+    </item>
+    <item name="rule3str">
+      <type>STRING</type>
+      <value>2.1.1.1 255.255.255.255 2.1.1.2 255.255.255.255 65535 32768 0 0 6 255 3 0</value>
+    </item>
+    <item name="rule4str">
+      <type>STRING</type>
+      <value>2.1.1.2 255.255.255.255 2.1.1.1 255.255.255.255 65535 32768 17 255 4 0</value>
+    </item>
+    <item name="rule5str">
+      <type>STRING</type>
+      <value>2.1.1.0 255.255.255.255 2.1.1.3 255.255.255.255 65535 32768 1025 65535 6 255 5 0</value>
+    </item>
+  </data>
+</root>

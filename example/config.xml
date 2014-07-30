@@ -1,0 +1,111 @@
+<!-- 测试配置文件,包括测试配置、资源配置、资源连接情况 -->
+<root>
+  <test>
+    <test_station_path>/home/gaoxun/trunk/autotest</test_station_path>
+    <test_suite_path>../test_suite</test_suite_path>
+    <log_name>system_testing</log_name>
+    <report_name>system_testing</report_name>
+    <local_ip>10.0.24.16</local_ip>
+    <test_user>gaox</test_user>
+    <template>flowfirm_g</template>
+    <execute rollback="true" order="sequence">
+    <!--
+    clear,
+    环境测试
+    -->
+    报文长度测试,
+    LAN端口负载均衡偏差率,
+    分析设备负载均衡偏差率,
+    丢弃业务分析设备负载均衡算法,
+    GRE报文分析设备负载均衡算法,
+    GRE报文灵活规则测试01,
+    GRE报文灵活规则测试02,
+    GRE报文灵活规则测试03,
+    普通IPv4报文灵活规则测试01,
+    普通IPv4报文灵活规则测试02,
+    普通IPv4报文灵活规则测试03,
+    GRE报文掩码规则测试,
+    普通IPv4报文掩码规则测试,
+    一元组规则测试,
+    分片报文测试01,
+    分片报文测试02,
+    <!--
+    光保护切换时间,
+    -->
+    </execute>
+    <script_library>
+      <case name="clear">
+        <py>tools/clear.py</py></case>
+      <case name="环境测试">
+        <txt>tools/environmentTest/environmentTest.txt</txt>
+        <xml>tools/environmentTest/environmentTest.xml</xml></case>
+      <case name="报文长度测试">
+        <txt>recognize/length/lengthBase/lengthBase.txt</txt>
+        <xml>recognize/length/lengthBase/lengthBase.xml</xml></case>
+      <case name="光保护切换时间">
+        <py>opticalProtection/performance/switchTime/switchTime.py</py></case>
+      <case name="LAN端口负载均衡偏差率">
+        <py>redirect/highAvailability/loadBalance/portsLoadBalanceDeviation/portsLoadBalanceDeviation.py</py></case>
+      <case name="分析设备负载均衡偏差率">
+        <txt>redirect/highAvailability/loadBalance/devicesLoadBalanceDeviation/devicesLoadBalanceDeviation.txt</txt>
+        <xml>redirect/highAvailability/loadBalance/devicesLoadBalanceDeviation/devicesLoadBalanceDeviation.xml</xml></case>
+      <case name="丢弃业务分析设备负载均衡算法">
+        <txt>redirect/highAvailability/loadBalance/devicesLoadBalanceAlgorithm/devicesLoadBalanceAlgorithm.txt</txt>
+        <xml>redirect/highAvailability/loadBalance/devicesLoadBalanceAlgorithm/nonTunnelPacketsAndDiscard.xml</xml></case>
+      <case name="GRE报文分析设备负载均衡算法">
+        <txt>redirect/highAvailability/loadBalance/devicesLoadBalanceAlgorithm/devicesLoadBalanceAlgorithm.txt</txt>
+        <xml>redirect/highAvailability/loadBalance/devicesLoadBalanceAlgorithm/grePacketsAndReflow.xml</xml></case>
+      <case name="单业务多端口多分析设备边界">
+        <txt>redirect/highAvailability/backendTopology/1TransactionMultiPortsMultiDevicesBoundary/1TransactionMultiPortsMultiDevicesBoundary.txt</txt>
+        <xml>redirect/highAvailability/backendTopology/1TransactionMultiPortsMultiDevicesBoundary/singleBoardAnd2KeepAliveProtocol.xml</xml></case>
+      <case name="普通报文常用灵活规则测试">
+        <txt>match/type/flex/nonTunnelPacket/nonTunnelPacket.txt</txt>
+        <xml>match/type/flex/nonTunnelPacket/commonRuleMode.xml</xml></case>
+      <case name="GRE报文灵活规则测试01">
+        <txt>match/type/flex/tunnelPacketGRE/tunnelPacket.txt</txt>
+        <xml>match/type/flex/tunnelPacketGRE/tunnelRuleMode_01.xml</xml></case>
+      <case name="GRE报文灵活规则测试02">
+        <txt>match/type/flex/tunnelPacketGRE/tunnelPacket.txt</txt>
+        <xml>match/type/flex/tunnelPacketGRE/tunnelRuleMode_02.xml</xml></case>
+      <case name="GRE报文灵活规则测试03">
+        <txt>match/type/flex/tunnelPacketGRE/tunnelPacket.txt</txt>
+        <xml>match/type/flex/tunnelPacketGRE/tunnelRuleMode_03.xml</xml></case>
+      <case name="tunnelPacketGTP_01">
+        <txt>match/type/flex/tunnelPacketGTP/tunnelPacket.txt</txt>
+        <xml>match/type/flex/tunnelPacketGTP/tunnelRuleMode_01.xml</xml></case>
+      <case name="tunnelPacketGTP_02">
+        <txt>match/type/flex/tunnelPacketGTP/tunnelPacket.txt</txt>
+        <xml>match/type/flex/tunnelPacketGTP/tunnelRuleMode_02.xml</xml></case>
+      <case name="tunnelPacketGTP_03">
+        <txt>match/type/flex/tunnelPacketGTP/tunnelPacket.txt</txt>
+        <xml>match/type/flex/tunnelPacketGTP/tunnelRuleMode_03.xml</xml></case>
+      <case name="普通IPv4报文灵活规则测试01">
+        <txt>match/type/flex/nonTunnelPacketIPv4/nonTunnelPacket.txt</txt>
+        <xml>match/type/flex/nonTunnelPacketIPv4/commonRuleModeIpv4_1.xml</xml></case>
+      <case name="普通IPv4报文灵活规则测试02">
+        <txt>match/type/flex/nonTunnelPacketIPv4/nonTunnelPacket.txt</txt>
+        <xml>match/type/flex/nonTunnelPacketIPv4/commonRuleModeIpv4_2.xml</xml></case>
+      <case name="普通IPv4报文灵活规则测试03">
+        <txt>match/type/flex/nonTunnelPacketIPv4/nonTunnelPacket.txt</txt>
+        <xml>match/type/flex/nonTunnelPacketIPv4/commonRuleModeIpv4_3.xml</xml></case>
+      <case name="GRE报文掩码规则测试">
+        <txt>match/type/mask/tunnelPacketGRE/tunnelPacket.txt</txt>
+        <xml>match/type/mask/tunnelPacketGRE/tunnelRuleMode.xml</xml></case>
+      <case name="tunnelPacketGTPMask">
+        <txt>match/type/mask/tunnelPacketGTP/tunnelPacket.txt</txt>
+        <xml>match/type/mask/tunnelPacketGTP/tunnelRuleMode.xml</xml></case>
+      <case name="普通IPv4报文掩码规则测试">
+        <txt>match/type/mask/nonTunnelPacketIPv4/nonTunnelPacket.txt</txt>
+        <xml>match/type/mask/nonTunnelPacketIPv4/commonRuleModeIpv4.xml</xml></case>
+      <case name="一元组规则测试">
+        <txt>match/type/vlanAndMpls/vlanAndMplsBase/vlanAndMpls.txt</txt>
+        <xml>match/type/vlanAndMpls/vlanAndMplsBase/vlanAndMpls.xml</xml></case>
+      <case name="分片报文测试01">
+        <txt>fragment/hitAndTransaction/match/flex/normalAndTunnelPacket/functionTestify.txt</txt>
+        <xml>fragment/hitAndTransaction/match/flex/normalAndTunnelPacket/functionTestify.xml</xml></case>
+      <case name="分片报文测试02">
+        <txt>fragment/hitAndTransaction/match/mask/tunnelPacket/functionTestify.txt</txt>
+        <xml>fragment/hitAndTransaction/match/mask/tunnelPacket/functionTestify.xml</xml></case>
+    </script_library>
+  </test>
+</root>

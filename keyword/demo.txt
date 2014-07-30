@@ -1,0 +1,73 @@
+#ipv4掩码规则测试
+
+# 载入资源
+RESOURCE utils
+RESOURCE wan
+RESOURCE lan
+RESOURCE cli
+RESOURCE ixia
+
+# 载入数据
+DATA rollback
+DATA dir
+DATA file
+DATA rate
+DATA exphits
+DATA rule1str
+DATA rule2str
+DATA rule3str
+DATA rule4str
+DATA rule5str
+
+RUN cli setRollback $rollback
+RUN cli login
+
+FOR i IN 1~5
+  # 配置业务的规则类型,后端口,HOST
+  RUN cli addRuleMode $i "mask"
+  SET index {SUB $i 1}
+  RUN cli setTransaction $i "port" lan[$index]
+  RUN cli setTransactionHost $i $i "mac" "10-00-00-00-00-00"
+ENDFOR
+
+# 下发规则
+RUN cli clearRule
+RUN cli clearHit
+SET rule1 {RUN cli getRule "Ipv4MaskRule" $rule1str}
+SET rule2 {RUN cli getRule "Ipv4MaskRule" $rule2str}
+SET rule3 {RUN cli getRule "Ipv4MaskRule" $rule3str}
+SET rule4 {RUN cli getRule "Ipv4MaskRule" $rule4str}
+SET rule5 {RUN cli getRule "Ipv4MaskRule" $rule5str}
+RUN cli addRule [$rule1,$rule2,$rule3,$rule4,$rule5]
+
+# 发送流量
+RUN cli clearPort
+RUN ixia load $dir $file $rate
+RUN ixia clearStats
+RUN ixia startTransmit True
+RUN utils sleep 2
+
+# 查看聚合端口组中各成员端口的流量输出情况
+SET ix_out  {RUN ixia  getStats "Frames Sent"}
+SET wan_in  {RUN cli getCount wan "input packets"}
+SET wan_out {RUN cli getCount wan "output packets"}
+SET lan_out {RUN cli getCount lan "output packets"}
+
+# 判断各种计数和是否正确
+SET wan_lan_out {ADD wan_out lan_out}
+IF {RUN utils sumEqual $ix_out $wan_in}
+  REPORT "info" "Sum of the counts are as expected"
+ENDIF
+IF {RUN utils sumEqual $ix_out $wan_in} OR {RUN utils sumEqual $wan_in $wan_lan_out}
+  REPORT "info" "Sum of the counts are as expected"
+ELSE
+  REPORT "error" "Some of the counts are NOT expected"
+ENDIF
+
+# 比较命中计数是否符合预期
+SET hits [0,0,0,0,0]
+FOR i IN 0~4
+  SET j {ADD $i 1} 
+  SET hits[$i] {RUN cli getTransactionHit $j}
+ENDFOR
+EXPECT "Hits of 5 transactions" $exphits $hits
